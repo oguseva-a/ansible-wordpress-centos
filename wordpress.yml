@@ -1,0 +1,22 @@
+- hosts: all
+  tasks:
+  - name: Donwload Wordpress
+    unarchive:
+      src: "https://wordpress.org/latest.tar.gz"
+      dest: /tmp
+      remote_src: yes
+  - name: Move files to /var/www/html
+    shell: cp -rf . "/var/www/html"
+    args:
+      chdir: "/tmp/wordpress/"
+  - name: Remove temporary dir
+    file:
+      path: "/tmp/wordpress/"
+      state: absent
+  - name: Change ownership of installation directory
+    file:
+      path: "/var/www/html"
+      owner: "apache"
+      group: "apache"
+      state: directory
+      recurse: yes

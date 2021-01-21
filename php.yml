@@ -1,0 +1,28 @@
+- hosts: ansible-host-VM
+  vars:
+    php_version: "7.3"
+    
+  tasks:
+  - name: Install REMI
+    yum:
+      name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+  - name: Enable PHP 7.2
+    shell: yum-config-manager --enable remi-php72
+    when:
+    - php_version != "7.3" 
+    - php_version != "7.4" 
+
+  - name: Enable PHP 7.3
+    shell: yum-config-manager --enable remi-php73
+    when: php_version == "7.3"
+
+  - name: Enable PHP 7.4
+    shell: yum-config-manager --enable remi-php74
+    when: php_version == "7.4"
+
+  - name: Install PHP
+    yum:
+      name:
+      - php
+      - php-mysql

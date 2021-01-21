@@ -1,0 +1,26 @@
+- hosts: all
+  tasks:
+  - name: Install MariaDB
+    yum:
+      name:
+      - mariadb-server
+      - mariadb
+      - MySQL-python
+
+  - name: Start MariaDB
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
+
+  - name: Create a WordPress DB
+    mysql_db:
+      name: wordpress
+      state: present
+
+  - name: Create MySQL User
+    mysql_user:
+      name: olia
+      password: 123
+      priv: '*.*:ALL'
+      state: present
