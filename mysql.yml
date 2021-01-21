@@ -20,7 +20,7 @@
 
   - name: Create MySQL User
     mysql_user:
-      name: olia
-      password: 123
+      name: 
+      password: 
       priv: '*.*:ALL'
       state: present
